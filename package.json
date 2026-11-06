@@ -1,0 +1,8 @@
+{
+  "name": "cat-proxy",
+  "version": "1.0.0",
+  "main": "main.js",
+  "type": "module",
+  "scripts": { "start": "node main.js -h 127.0.0.1 -p 3000 -c ./cache" },
+  "dependencies": { "commander": "...", "superagent": "..." }
+}
