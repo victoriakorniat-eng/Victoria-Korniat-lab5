@@ -107,22 +107,6 @@ async function handleGet(code, res) {
   sendImage(res, image, 'http.cat');             // ...потім відповідь
 }
 
-async function handlePut(code, req, res) {
-  const body = await readBody(req);
-  if (body.length === 0) return sendText(res, 400, 'Порожнє тіло: очікується картинка');
-  await saveToCache(code, body);
-  sendText(res, 201, `Картинку для коду ${code} збережено`);
-}
-
-async function handleDelete(code, res) {
-  try {
-    await fs.unlink(cacheFile(code));
-  } catch (err) {
-    if (err.code === 'ENOENT') return sendText(res, 404, `У кеші немає картинки ${code}`);
-    throw err;
-  }
-  sendText(res, 200, `Картинку ${code} видалено з кешу`);
-}
 
 // ---------- 4. Сервер (єдиний дозволений колбек) ----------
 const server = http.createServer(async (req, res) => {
