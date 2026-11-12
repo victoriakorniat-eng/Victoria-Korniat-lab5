@@ -107,7 +107,12 @@ async function handleGet(code, res) {
   sendImage(res, image, 'http.cat');             // ...потім відповідь
 }
 
-
+async function handlePut(code, req, res) {
+  const body = await readBody(req);
+  if (body.length === 0) return sendText(res, 400, 'Порожнє тіло: очікується картинка');
+  await saveToCache(code, body);
+  sendText(res, 201, `Картинку для коду ${code} збережено`);
+}
 // ---------- 4. Сервер (єдиний дозволений колбек) ----------
 const server = http.createServer(async (req, res) => {
   try {
