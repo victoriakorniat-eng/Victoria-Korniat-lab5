@@ -113,6 +113,7 @@ async function handlePut(code, req, res) {
   await saveToCache(code, body);
   sendText(res, 201, `Картинку для коду ${code} збережено`);
 }
+
 // ---------- 4. Сервер (єдиний дозволений колбек) ----------
 const server = http.createServer(async (req, res) => {
   try {
