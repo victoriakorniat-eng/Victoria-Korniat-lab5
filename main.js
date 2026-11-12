@@ -123,7 +123,7 @@ async function handleDelete(code, res) {
   }
   sendText(res, 200, `Картинку ${code} видалено з кешу`);
 }
-
+ 
 // ---------- 4. Сервер (єдиний дозволений колбек) ----------
 const server = http.createServer(async (req, res) => {
   try {
