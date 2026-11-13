@@ -1,14 +1,15 @@
-# GET: перший (промах), у заголовках X-Image-Source: http.cat
-curl -i -o out.jpg http://127.0.0.1:3000/200
+# GET: перший запит (промах кешу), у заголовках X-Image-Source: http.cat
+# -D - виводить заголовки в консоль, -o зберігає в файл лише тіло (картинку)
+curl -D - -o out.jpg http://127.0.0.1:3000/200
 
-# GET: повторний (влучання), X-Image-Source: cache
+# GET: повторний запит (влучання кешу), X-Image-Source: cache
 curl -D - -o /dev/null http://127.0.0.1:3000/200
 
 # PUT: власна картинка -> 201
 curl -i -X PUT --data-binary @my.jpg -H "Content-Type: image/jpeg" http://127.0.0.1:3000/200
 
-# GET після PUT -> ваша картинка
-curl -o after-put.jpg http://127.0.0.1:3000/200
+# GET після PUT -> повертається власна картинка
+curl -D - -o after-put.jpg http://127.0.0.1:3000/200
 
 # DELETE -> 200, потім ще раз -> 404
 curl -i -X DELETE http://127.0.0.1:3000/200
@@ -17,8 +18,8 @@ curl -i -X DELETE http://127.0.0.1:3000/200
 # неіснуючий код -> 404
 curl -i http://127.0.0.1:3000/999
 
-# недозволений метод -> 405 і Allow
+# недозволений метод -> 405 і заголовок Allow
 curl -i -X POST http://127.0.0.1:3000/200
 
-# без опцій -> помилка commander і ненульовий код
+# запуск без обов'язкових опцій -> повідомлення commander і ненульовий код
 node main.js; echo $?
